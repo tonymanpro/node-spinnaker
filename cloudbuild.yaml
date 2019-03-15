@@ -1,0 +1,15 @@
+steps:
+# install the environment
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['install']
+# test the application
+#- name: 'gcr.io/cloud-builders/npm'
+#  args: ['test']
+# build the application
+- name: 'gcr.io/cloud-builders/docker'
+  args: ["build", "-t", "gcr.io/${PROJECT_ID}/node-spinnaker:${BRANCH_NAME}", "."]
+# push the image
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'push', 'gcr.io/${PROJECT_ID}/node-spinnaker:${BRANCH_NAME}']  
+timeout: 1200s # Timeout 20 min
+images: ['gcr.io/${PROJECT_ID}/node-spinnaker:${BRANCH_NAME}']
